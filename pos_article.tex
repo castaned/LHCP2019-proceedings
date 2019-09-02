@@ -27,32 +27,49 @@
 \section{Introduction}
 
 
-The interest and development of machine learning and big data tools to be used in the framework of particle physics experiments
-has being growing during the most recent years. The Large Hadron Collider (LHC) has started the work towards the so called
-High Luminosity era in which the collision frequency will increase by one order of magnitude.  This will allow scientist to
-explode the detector capabilities and increase the probabilities
-for the discovery of new physics phenomena. Multivariate analysis  has been used in the past to disentangle between signal and
-background processes, nevertheless with the development of deep learning it seems possible to optimize several tasks in HEP as for instance
-particle identification, reconstruction, triggering.   The use of complicate Generative Adversarial networks seems promising to
-reduce the simulation time and the integration of machine learning models at the hardware level may be crucial to process in a smart
-way the signals received during the messy environment in high luminosity 
+There is a growing interest on the implementation of machine learning and big data tools to be used by modern particle physics
+experiments, in particular those associated with the Large Hadron Collider (LHC) at the CERN laboratory. The LHC has sucessfully
+collected data from 2010 to 2018, having the discovery of the Higgs boson among its greater achievements. The LHC has started
+a manteinance and upgrade period towards its phase-2, also known, High Luminosity era in which the collision frecuency will increase one
+order of magnitude compared to the current operation. This will allow scientist to fully exploit the detector capabilities and increase
+the probabilities for the discovery of new physics phenomena.  New analysis and data processing methods need to be developed to cope with
+this increase on luminosity. In the past Multivariate techniques have been used to disentangle between signal and background processes,
+nevertheless with the development of deep learning it seems possible to optimize several tasks as for instance those related to particle identification, reconstruction and triggering.
+Also the use of rather new architectures such as the Generative Adversarial networks (GANs) seems promising to reduce the simulation time.
 
 
-\section{Particle Identification, Reconstruction and Triggering}
+\section{Jet classification}
+
+Jet classification is one of the most important tasks in particle physics. Identifying the nature of a jet through its internal structure
+has broad applications to searches for new physics and standard model measurements at the LHC.  A jet could be initiated by a quark or a gluon,
+the main difference is that gluon jets tend to have more constituents and a broader radiation pattern than quark jets, traditional approach uses
+a set of key observables to achieve such separation, however a rather new technique that uses state-of-the-art image classification techniques has
+proven to have similar or better performance. Jets are identified by the energy deposition of their constituiend particles in the calorimeters.
+this energy deposition could be interpreted as an 
+image as the one shown in Figure~\ref{fig:jet_images}.  A deep neural network arquitecture known as Convolutional Neural Network (CNN) can be used
+to train a model that recognize whether a jet is originated by a quark or gluon, a CNN uses an array of layers that capture the structure of the image,
+the first layers act as filters in which there is a reduction in the dimensionality of the image, the last layer is a fully connected layer that receive this
+information and classify the jet accordingly, this arquitecture is shown in Figure~\ref{fig:cnn_schema}. The CNN was trained and the performance evaulated
+using Monte Carlo simulation samples as described in~\cite{jet_cnn}.  The performance is shown in Figure~\ref{fig:cnn_schema}
+
+\begin{figure}
+\begin{center}
+  \includegraphics[width=1.8in]{/home/alfredo/Pictures/ATLAS_quarkjet.png}
+  \includegraphics[width=1.95in]{/home/alfredo/Pictures/ATLAS_gluonjet.png}
+  \caption{Quark jet image (left) and gluon jet image (right) produced with Monte Carlo simulation. Quark-jets are more collimated than gluon ones}
+  \label{fig:jet_images}
+\end{center}
+\end{figure}
 
 
-Jet classification is one of the most important tasks in experimental particle physics. Jets could be originated from quarks or gluons
-in the case of quarks a jet could be further classified as if it was originated from a heavy (b,c,t) or light jet (u,d,s). 
+\begin{figure}
+\begin{center}
+  \includegraphics[width=4.4in]{/home/alfredo/Pictures/CNN_for_jets.png}
+  \caption{Illustration of a deep convolutional neural network arquitecture.}
+  \label{fig:cnn_schema}
+\end{center}
+\end{figure}
 
-Jets are identified by the deposition of energy in the electromagnetic or hadronic calorimeter, this energy deposition could be interpreted in a
-2D image as the one shown in Figure~\ref{}.  A first application of deep learning is the discrimination between a quark-initiated jet versus
-a gluon initiated one, this differentiation is important because it reveals the internal structure of a jet, experimentally is observed that
-gluon jets tend to have more constituents and broader radiation pattern than quark jets, this difference is exploited to train a Convolutional
-Neural Network (CNN) based on a series of layers that allow to train a model that differentiate between these two categories.
-
-These
-differentiation is important as for instance many of the rare process in standard model and some of the new physics theories are
-dominated for a production of heavy quark jet, as in the case of pairs of tops quarks and supersymmetry models.
 
 
 
@@ -60,15 +77,27 @@ dominated for a production of heavy quark jet, as in the case of pairs of tops q
 
 \section{GANs for simulation}
 
-Production of Monte Carlo simulation is one of the crucial tasks in High Energy Physics. It represents more than 50\% of the computing load of
-the GRID system.  Detailed simulation is needed to optimize the event selection for Standard Model and new physics searches, evaluate the
-performance of the detector systems. In the case of rare processes large samples are needed in order to reduce the statistical uncertainties.
+The production of Monte Carlo simulated samples is one of the crucial tasks in High Energy Physics. Currently this production represents
+more than 50\% of the computing load of the LHC computing (GRID). Detailed simulation is needed to optimize the event selection for Standard
+Model and new physics searches, evaluate the performance of the detector systems. In the case of rare processes large samples are needed in
+order to reduce the statistical uncertainties. The most computationally expensive step in the simulation pipeline of a typical experiment at the
+LHC is the detailed modeling of the full complexity of physics processes such as the evolution of particle showers inside calorimeters. 
+Generative Adversarial Networks (GANs) are a type of deep neural network composed of two nets, the generator and the discriminator.  GANs are
+trained with a known dataset, the generator usually starts with a seeded randomized input that is evaluated by the discriminator. Using a
+backpropagation algorithm the generator is able to learn from the training dataset until it reaches a point the discriminator is not able do
+distinguish between the true information and the one coming from the generator.  This principle is used for the simulation of showers in
+high energy physics.  The true showers are generated with a full simulation using GEANT4 package and compared with the output of a CaloGAN,
+as shown in Figure~\ref{fig:jet_images}.
 
-Generative Adversarial Networks (GANs) are a type of deep neural network composed of two nets, one of the networks is the generator and the other
 
-
-
-
+\begin{figure}
+\begin{center}
+  \includegraphics[width=2.2in]{/home/alfredo/Pictures/GAN_images.png}
+  \includegraphics[width=1.6in]{/home/alfredo/Pictures/shower_gans.png}
+  \caption{Quark jet image (left) and gluon jet image (right) produced with Monte Carlo simulation. Quark-jets are more collimated than gluon ones}
+  \label{fig:jet_images}
+\end{center}
+\end{figure}
 
 
 \section{Big data tools}
@@ -81,9 +110,12 @@ set of triggers applied at online and offline levels.
 
 
 \begin{thebibliography}{99}
-\bibitem{...}
-
-
+\bibitem{jet_cnn}  \emph{Quark versus Gluon Jet Tagging Using Jet Images with the ATLAS Detector}, CERN, ATLAS Collaboration, "ATL-PHYS-PUB-2017-017",Jul 2017, ATL-PHYS-PUB-2017-017, https://cds.cern.ch/record/2275641
+\bibitem{gans}  \emph{CaloGAN: Simulating 3D high energy particle showers in multilayer electromagnetic calorimeters with generative adversarial networks},
+  PhysRevD.97.014021,Paganini, Michela and de Oliveira, Luke and Nachman, Benjamin, Phys. Rev. D, volume 97, issue = 1, pages = 014021, numpages = 12, year = 2018,
+  month = {Jan}, doi = {10.1103/PhysRevD.97.014021}
 \end{thebibliography}
+
+
 
 \end{document}
