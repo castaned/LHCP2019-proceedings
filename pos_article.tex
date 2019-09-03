@@ -26,7 +26,6 @@
 
 \section{Introduction}
 
-
 There is a growing interest on the implementation of machine learning and big data tools to be used by modern particle physics
 experiments, in particular those associated with the Large Hadron Collider (LHC) at the CERN laboratory. The LHC has sucessfully
 collected data from 2010 to 2018, having the discovery of the Higgs boson among its greater achievements. The LHC has started
@@ -34,23 +33,24 @@ a manteinance and upgrade period towards its phase-2, also known, High Luminosit
 order of magnitude compared to the current operation. This will allow scientist to fully exploit the detector capabilities and increase
 the probabilities for the discovery of new physics phenomena.  New analysis and data processing methods need to be developed to cope with
 this increase on luminosity. In the past Multivariate techniques have been used to disentangle between signal and background processes,
-nevertheless with the development of deep learning it seems possible to optimize several tasks as for instance those related to particle identification, reconstruction and triggering.
-Also the use of rather new architectures such as the Generative Adversarial networks (GANs) seems promising to reduce the simulation time.
+nevertheless with the development of deep learning it seems possible to optimize several tasks as for instance those related to particle
+identification, reconstruction and triggering. Also the use of rather new architectures such as the Generative Adversarial networks (GANs)
+seems promising to achieve a substantial reduction on the time of simulation of Monte Carlo samples. 
 
 
-\section{Jet classification}
+\section{Jet Classification}
 
-Jet classification is one of the most important tasks in particle physics. Identifying the nature of a jet through its internal structure
-has broad applications to searches for new physics and standard model measurements at the LHC.  A jet could be initiated by a quark or a gluon,
-the main difference is that gluon jets tend to have more constituents and a broader radiation pattern than quark jets, traditional approach uses
-a set of key observables to achieve such separation, however a rather new technique that uses state-of-the-art image classification techniques has
-proven to have similar or better performance. Jets are identified by the energy deposition of their constituiend particles in the calorimeters.
-this energy deposition could be interpreted as an 
-image as the one shown in Figure~\ref{fig:jet_images}.  A deep neural network arquitecture known as Convolutional Neural Network (CNN) can be used
-to train a model that recognize whether a jet is originated by a quark or gluon, a CNN uses an array of layers that capture the structure of the image,
-the first layers act as filters in which there is a reduction in the dimensionality of the image, the last layer is a fully connected layer that receive this
-information and classify the jet accordingly, this arquitecture is shown in Figure~\ref{fig:cnn_schema}. The CNN was trained and the performance evaulated
-using Monte Carlo simulation samples as described in~\cite{jet_cnn}.  The performance is shown in Figure~\ref{fig:cnn_schema}
+Classification of jets is among the most important tasks in high energy physics experiments. Identifying the nature of a jet through
+its internal structure has broad applications to searches for new physics and Standard Model (SM) measurements at the LHC. According to the
+SM a jet could be initiated by a gluon or a quark, a key difference between these production mechanisms is that gluon jets
+tend to have more constituents and a broader radiation pattern than quark jets, traditional approach uses a set of key observables to
+achieve such separation, however a rather new method that uses state-of-the-art image classification techniques has proven to have similar
+or better performance. Experimentally jets are identified by energy deposited by its constituents in the calorimeters. This energy deposition
+could be interpreted as an image as shown in the Figure~\ref{fig:jet_images}, in which a comparision between a gluon initiated jet and a quark
+is shown. A deep neural network arquitecture known as Convolutional Neural Network (CNN) is used to train a model that recognize whether
+a jet is originated by a quark or gluon.  The CNN uses an array of filters and neural network layers that capture the information and patterns
+in the image. This arquitecture is shown in Figure~\ref{fig:cnn_schema}. The CNN was trained and the results evaluated using Monte Carlo simulation
+samples. The performance is shown in Figure~\ref{fig:cnn_schema}, more details can be found in~\cite{cnn_jets}.
 
 \begin{figure}
 \begin{center}
@@ -73,6 +73,14 @@ using Monte Carlo simulation samples as described in~\cite{jet_cnn}.  The perfor
 
 
 
+Another relevant tasks concerns the classificatio of jets according if they were originated from heavy or light quarks, rare and interesting
+processes such as production of Higgs bososn, top quarks and the search for exotica phenomena such as Supersymmetry contain processes includin
+b-quarks, therefore it is extremely important to separate those form the contribution of events with light quarks. Deep neural networks are used to perform such tasks, this has been implemnted in the tool DeepCSV used by the CMS collaboration~\cite{cms}. DeepCSV is base on a deep neural network
+with four hidden layers each one with 100 nodes. 
+
+
+Fake track rejection with multilayer perceptron,  Neural network based algorithm to identify fake tracks in the LHCb patter recognition. The
+algorithm retains more that 99\% of well reconstructed tracks while reducing the number of fake tracks by 60\% as reported in~\cite{lhcb}.
 
 
 \section{GANs for simulation}
